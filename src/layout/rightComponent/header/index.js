@@ -1,53 +1,25 @@
 import React, { Component } from 'react';
-import {Icon, Popover, message } from 'antd';
-import { getAction } from '@/axios'
-import styles from './index.module.less'
+// import { getAction } from '@/axios'
 
 class index extends Component {
     constructor(props){
         super(props);
         this.state={
-            userName: "管理员"
+            userName: "娜娜"
         }
-    }
-    
-
-    passCodeChange = () => {
-        message.warning("功能开发中！！！")
     }
 
     logout = () => {
         localStorage.clear();
-        getAction("/bigdata/auth/logout");
-        // message.warning("登录功能尚未对接，查看此功能需要在项目入口文件去掉默认登录设置");
-        // window.location.href = `http://${window.location.host}`;
+        window.location.href = `http://${window.location.host}`;
     }
 
     render() {
         return (
-            <header className={styles.header}>
-
-                {/* <Icon
-                    className={styles.trigger}
-                    type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
-                    onClick={this.props.toggle}
-                /> */}
-
-                <div className={styles.handle}>
-                    <span>欢迎, {this.state.userName}</span>
-                    <Popover 
-                        content={
-                            (
-                                <div className={styles.exit}>
-                                    <p onClick={this.passCodeChange}><Icon type="key" style={{marginRight:"8px"}} />修改密码</p>
-                                    <p onClick={this.logout}><Icon type="poweroff" style={{marginRight:"8px"}} />退出登录</p>
-                                </div>
-                            )
-                        }
-                        trigger="hover" placement="bottomLeft"
-                    >
-                        <Icon type="setting" style={{cursor:"pointer", margin: "0px 20px", fontSize:"20px"}} />
-                    </Popover>
+            <header style={{background: "#fff",padding: "0",flex: "0 0 80px",boxShadow: "0 2px 4px 0 rgba(35, 36, 37, 0.3)"}}>
+                <div style={{float:"right",lineHeight: "80px",padding: "0px 10px",fontsize: "16px"}}>
+                    <span>{this.state.userName}</span>
+                    <span onClick={this.logout} style={{padding:"0px 10px",cursor:"pointer"}}>退出</span>
                 </div>
 
             </header>

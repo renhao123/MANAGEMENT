@@ -1,5 +1,5 @@
 import React from 'react';
-import { postAction } from '@/axios';
+// import { postAction } from '@/axios';
 import { withRouter } from 'react-router-dom';
 import { message } from 'antd';
 import styles from './index.module.less';
@@ -24,15 +24,26 @@ class LoginPage extends React.Component{
             message.warning("密码不能为空");
             return false;
         }
-        postAction('/bigdata/auth/login',{username,password,rememberMe:"0"},1,1).then(res => {
-            if(res.success){
-                window.localStorage.setItem("loginStatus","true");
-                // window.localStorage.setItem("leftMenuList",JSON.stringify(res.obj.menus))//将左侧菜单数据写入localstrage
-                window.location.reload();
-            }else{
-                message.error(res.obj)
-            }
-        })
+
+        // postAction('/bigdata/auth/login',{username,password,rememberMe:"0"},1,1).then(res => {
+        //     if(res.success){
+        //         window.localStorage.setItem("loginStatus","true");
+        //         // window.localStorage.setItem("leftMenuList",JSON.stringify(res.obj.menus))//将左侧菜单数据写入localstrage
+        //         window.location.reload();
+        //     }else{
+        //         message.error(res.obj)
+        //     }
+        // })
+
+
+        if (username === "admin" && password === "!23qaz") {
+            window.localStorage.setItem("loginStatus","true");
+            window.location.reload();
+        } else {
+            message.error("账号/密码错误，请重新输入！！！")
+        }
+
+
     }
 	
     render(){

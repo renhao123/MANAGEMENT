@@ -3,9 +3,15 @@ import { Layout } from 'antd';
 import LeftComponent from './leftComponent';
 import RightComponent from './rightComponent';
 
-import styles from './index.module.less'
-
 const { Sider } = Layout;
+
+const siderStyle = {
+    flex: "0 0 230px !important",
+    maxWidth: "230px !important",
+    minWidth: "230px !important",
+    width: "230px !important",
+    height: "100vh"
+}
 
 class Main extends React.Component{
     constructor(props){
@@ -24,7 +30,7 @@ class Main extends React.Component{
     render () {
         return (
             <Layout>
-                <Sider trigger={null} collapsible collapsed={this.state.collapsed} className={styles.sider}>
+                <Sider trigger={null} collapsible collapsed={this.state.collapsed} style={siderStyle}>
                     <LeftComponent></LeftComponent>
                 </Sider>
                 <Layout style={{height:"100vh",display:"flex"}}>

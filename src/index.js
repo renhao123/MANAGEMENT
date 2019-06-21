@@ -13,13 +13,15 @@ import Loading from './loading';
 class App extends React.Component {
     render(){
         let loginStatus = window.localStorage.getItem("loginStatus");//从cookie中取登录状态
-        // loginStatus = true;//开发截断默认登录状态
         return (<LocaleProvider locale={zhCN}>
                 <Router>
                     <React.Fragment>
-                        {loginStatus==="true"?
-                            <Main/>://登录状态跳转到主页
-                            <Login/>//未登录状态跳转到登录页
+                        {
+                            loginStatus
+                            ?
+                            <Main/>
+                            :
+                            <Login/>
                         }
                         <Loading/>
                     </React.Fragment>

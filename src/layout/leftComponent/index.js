@@ -13,57 +13,21 @@ class index extends Component {
             rootSubmenuKeys: [],
             current: "",
             leftMenu:[
+                // {
+                //     id:"10",
+                //     name:"行为画像",
+                //     url:"",
+                //     iconUrl:"behavioral-portrait_",
+                //     subMenus:[
+                //         {id:"11",name:"群体画像",url:"/main/xingweihuaxiang/all",iconUrl:"",subMenus:[]},
+                //     ]
+                // }
                 {
-                    id:"10",
-                    name:"行为画像",
-                    url:"",
+                    id:"1",
+                    name:"订单列表",
+                    url:"/main/orderlist",
                     iconUrl:"behavioral-portrait_",
-                    subMenus:[
-                        {id:"11",name:"群体画像",url:"/main/xingweihuaxiang/all",iconUrl:"",subMenus:[]},
-                        {id:"12",name:"个人画像",url:"/main/xingweihuaxiang/personal",iconUrl:"",subMenus:[]},
-                        {id:"13",name:"群体行为轨迹",url:"/main/xingweihuaxiang/guiji",iconUrl:"",subMenus:[]},
-                    ]
-                },{
-                    id:"20",
-                    name:"精准资助",
-                    url:"",
-                    iconUrl:"shengq-",
-                    subMenus:[
-                        {id:"21",name:"家庭经济困难学生分析",url:"/main/jingzhunzizhu",iconUrl:"",subMenus:[]},
-                        {id:"22",name:"家庭经济困难学生查询",url:"/main/jingzhunzizhu/xueshengchaxun",iconUrl:"",subMenus:[]},
-                        {id:"23",name:"异常家庭经济困难学生",url:"/main/jingzhunzizhu/kunnanxuesheng",iconUrl:"",subMenus:[]},
-                        {id:"24",name:"建议关爱学生",url:"/main/jingzhunzizhu/guanaixuesheng",iconUrl:"",subMenus:[]},
-                    ]
-                },{
-                    id:"30",
-                    name:"综合预警",
-                    url:"",
-                    iconUrl:"yujingchuzhi",
-                    subMenus:[
-                        {id:"31",name:"综合预警",url:"/main/comprehensivewarning",iconUrl:"",subMenus:[]},
-                    ]
-                },{
-                    id:"40",
-                    name:"系统设置",
-                    url:"",
-                    iconUrl:"shezhi",
-                    subMenus:[
-                        {id:"41",name:"资助达标金额配置",url:"/main/systemsetup/zizhudabiao",iconUrl:"",subMenus:[]},
-                        {id:"42",name:"预警标签显示时间配置",url:"/main/systemsetup/yujingbiaoqian",iconUrl:"",subMenus:[]},
-                        {id:"43",name:"预警配置",url:"/main/systemsetup/setting",iconUrl:"",subMenus:[]},
-                        {id:"44",name:"预警白名单配置",url:"/main/systemsetup/baimingdan",iconUrl:"",subMenus:[]},
-                        {id:"45",name:"预警处理达标配置",url:"/main/systemsetup/yujingchuli",iconUrl:"",subMenus:[]},
-                    ]
-                },{
-                    id:"50",
-                    name:"权限管理",
-                    url:"",
-                    iconUrl:"authority",
-                    subMenus:[
-                        {id:"51",name:"账户管理",url:"/main/quanxianguanli/account",iconUrl:"",subMenus:[]},
-                        {id:"52",name:"角色权限管理",url:"/main/quanxianguanli/authority",iconUrl:"",subMenus:[]},
-                        {id:"53",name:"菜单管理",url:"/main/quanxianguanli/menu",iconUrl:"",subMenus:[]},
-                    ]
+                    subMenus:[]
                 }
             ]
         }
