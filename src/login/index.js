@@ -1,8 +1,9 @@
 import React from 'react';
 // import { postAction } from '@/axios';
 import { withRouter } from 'react-router-dom';
-import { message } from 'antd';
-import styles from './index.module.less';
+import { message, Input, Button } from 'antd';
+import Bg from './bg.png'
+import Logo from './logo.jpg'
 
 class LoginPage extends React.Component{
 
@@ -24,47 +25,56 @@ class LoginPage extends React.Component{
             message.warning("密码不能为空");
             return false;
         }
-
-        // postAction('/bigdata/auth/login',{username,password,rememberMe:"0"},1,1).then(res => {
-        //     if(res.success){
-        //         window.localStorage.setItem("loginStatus","true");
-        //         // window.localStorage.setItem("leftMenuList",JSON.stringify(res.obj.menus))//将左侧菜单数据写入localstrage
-        //         window.location.reload();
-        //     }else{
-        //         message.error(res.obj)
-        //     }
-        // })
-
-
         if (username === "admin" && password === "!23qaz") {
             window.localStorage.setItem("loginStatus","true");
             window.location.reload();
         } else {
             message.error("账号/密码错误，请重新输入！！！")
         }
-
-
     }
-	
+
+    nameChange = (e) => {
+        this.setState({
+            username:e.target.value
+        })
+    }
+
+	passwordChange = (e) => {
+        this.setState({
+            password:e.target.value
+        })
+    }
+
     render(){
         return (
-            <div className={styles.bgContainer}>
-                <div className={styles.loginContiner}>
-                    <img alt="中南财经政法大学logo" src={require('./logo.png')}/>
-                    <p className={styles.title}>大数据应用与分析平台</p>
-                    <div className={styles.form}>
-                        <p>用户名</p>
-                        <input autoComplete="new-password" onChange={(e)=>{this.setState({username:e.target.value})}}/>
-                        <p>密码</p>
-                        <input type="password" autoComplete="new-password" onChange={(e)=>{this.setState({password:e.target.value})}}/>
-                    </div>
-                    <div style={{clear:"both"}}></div>
-                    <div onClick={this.loginIn} className={styles.submit}>登录</div>
-                    <div style={{clear:"both"}}></div>
-                    <p className={styles.copyRight}>版权所有 Copyright &copy; 2019 中南财经政法大学</p>
+            <div style={{
+                position: "fixed",
+                left: "0px",
+                top: "0px",
+                width: "100%", 
+                height:"100%",
+                overflow:"hidden",
+                background: `url(${Bg}) no-repeat left center`,
+                backgroundSize:"cover",
+                border:"1px solid #ccc", 
+            }}>
+                <div style={{
+                    width:"26%", 
+                    border:"1px solid #ccc",
+                    position:"absolute",
+                    right: "20%",
+                    top:"32%",
+                    borderRadius:"15px",
+                    padding:"1.5% 2%",
+                    textAlign:"center"
+                }}>
+                    <img src={Logo} alt="" style={{width:"30%", marginBottom:"10px"}} />
+                    <p style={{fontSize:"18px", marginBottom:"2rem"}}>襄阳第一人民医院预约体检管理平台</p>
+                    <Input value={this.state.username} size="large" onChange={this.nameChange} style={{marginBottom:"1rem"}} placeholder="请输入用户名..."/>
+                    <Input value={this.state.password} size="large" onChange={this.passwordChange} style={{marginBottom:"2rem"}} placeholder="请输入密码..."/>
+                    <Button type="primary" size="large" block style={{marginBottom:"1rem"}} onClick={this.loginIn}>登录</Button>
                 </div>
-            </div>
-            
+            </div>            
         )
     }
 		

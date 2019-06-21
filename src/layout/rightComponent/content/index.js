@@ -49,7 +49,7 @@ const OrderList = asyncComponent(() => import('./pages/OrderList'));
 class index extends Component {
     render() {
         return (
-            <Content style={{margin: "4px 0 0 0",background: "#F8FAF9",overflow: "auto",flex:"1",padding: "0px"}}>
+            <Content style={{margin: "4px 0 0 0",overflow: "auto",flex:"1",padding: "0px"}}>
                 <Switch>
                     <Route exact path="/main/orderlist" component={OrderList} />
                     
