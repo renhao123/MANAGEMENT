@@ -23,8 +23,6 @@ class TableList extends React.Component{
                 render:(text,record) => {
                     return (
                         <span>
-                            <span style={{color:"#1890ff",cursor:"pointer"}}>编辑</span>
-                            <Divider type="vertical" />
                             <span style={{color:"#1890ff",cursor:"pointer"}} onClick={this.initPassWord.bind(this, record)}>初始化密码</span>
                             <Divider type="vertical" />
                             <Popconfirm
