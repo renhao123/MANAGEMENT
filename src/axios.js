@@ -85,7 +85,7 @@ ajax.interceptors.response.use((response) => {  // 接受请求后reqNumer--，�
 }, function (error) {
     // 对响应错误做点什么
     if (error && error.response) {
-        message.warn(error);
+        message.warn(error.response.statusText);
         // break;
         reqNumer--;
         if (reqNumer <= 0) {

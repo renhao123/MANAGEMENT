@@ -54,7 +54,7 @@ class Filter extends React.Component{
 
     render(){
         return (
-            <div style={{marginBottom:"20px", background:"white", padding:"15px 10px"}}>
+            <div style={{marginBottom:"20px", background:"white", padding:"15px 10px", border:"1px solid #e8e8e8"}}>
 
                 <span style={{textAlign:"center", lineHeight:"32px", margin:"0px 10px"}}>姓名：</span>
                 <Input value={this.state.name} placeholder="请输入预约者姓名" style={{width:"150px"}} onChange={this.nameChange} />
@@ -86,7 +86,7 @@ class Filter extends React.Component{
                     <Option value="2">已体检</Option>
                 </Select>
 
-                <Button type="primary" icon="search" style={{float: "right"}} onClick={this.search}>搜索</Button>
+                <Button type="primary" icon="search" style={{marginLeft: "20px"}} onClick={this.search}>搜索</Button>
             </div>
         )
     }

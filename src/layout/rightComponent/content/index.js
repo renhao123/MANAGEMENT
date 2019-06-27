@@ -44,15 +44,17 @@ let asyncComponent = (loadComponent, placeholder = null) => {
 
 // 订单列表
 const OrderList = asyncComponent(() => import('./pages/OrderList'));
+// 账户管理
+const Account = asyncComponent(() => import('./pages/Account'));
 
 
 class index extends Component {
     render() {
         return (
-            <Content style={{margin: "4px 0 0 0",overflow: "auto",flex:"1",padding: "0px"}}>
+            <Content style={{margin: "4px 0 0 0",overflow: "auto",flex:"1",padding: "0px", background: "#f3f3f3"}}>
                 <Switch>
                     <Route exact path="/main/orderlist" component={OrderList} />
-                    
+                    <Route exact path="/main/account" component={Account} />
                     <Route path="*" render={(props) => <Redirect to={"/main/orderlist"}/>} />
                 </Switch>
             </Content>

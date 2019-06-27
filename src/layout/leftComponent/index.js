@@ -26,7 +26,14 @@ class index extends Component {
                     id:"1",
                     name:"订单列表",
                     url:"/main/orderlist",
-                    iconUrl:"behavioral-portrait_",
+                    iconUrl:"icon-detail",
+                    subMenus:[]
+                },
+                {
+                    id:"2",
+                    name:"账户管理",
+                    url:"/main/account",
+                    iconUrl:"icon-addteam",
                     subMenus:[]
                 }
             ]
@@ -84,7 +91,7 @@ class index extends Component {
                     key={item.id}
                     title={
                         <span>
-                            <i className={`iconfont icon-${item.iconUrl}`}></i>
+                            <i className={`iconfont ${item.iconUrl}`}></i>
                             <span>{item.name}</span>
                         </span>
                     }
@@ -95,7 +102,7 @@ class index extends Component {
         }else{
             if(item.iconUrl){
                 return(<Menu.Item key={item.url}>
-                    <i className={`iconfont icon-${item.iconUrl}`}></i>
+                    <i className={`iconfont ${item.iconUrl}`}></i>
                     <span>{item.name}</span>
                 </Menu.Item>)
             }else{

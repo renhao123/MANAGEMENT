@@ -156,7 +156,7 @@ class ListTable extends React.Component{
 
     render(){
         return (
-            <div style={{background:"white",padding:"15px"}}>
+            <div style={{background:"white",padding:"15px",border:"1px solid #e8e8e8"}}>
                 <Table
                     columns={this.state.columns}
                     dataSource={this.state.data}
