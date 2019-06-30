@@ -57,10 +57,6 @@ class index extends Component {
             })
             this.setState({openKeys, rootSubmenuKeys, current});
         }, 50)
-        
-        // let leftMenu = JSON.parse(window.localStorage.getItem("leftMenuList"));
-        // console.log(leftMenu)
-        // this.setState({leftMenu})
     }
     
     selectClick = ({ key })=> {

@@ -1,5 +1,6 @@
 import React from 'react'
 import {Modal, Input, message} from 'antd'
+import {postAction} from '@/axios'
 
 class ChangePassWord extends React.Component{
 
@@ -44,9 +45,22 @@ class ChangePassWord extends React.Component{
             return false
         }
 
-        message.success("密码设置成功，请重新登录！！！")
-        localStorage.clear();
-        window.location.href = `http://${window.location.host}`;
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        postAction("/system/user/update/password",{
+            userId:userInfo.id,
+            originalPassword:this.state.old,
+            currentPassword:this.state.new
+        }).then(
+            (res) => {
+                if(res.success){
+                    message.success("密码设置成功，请重新登录！！！")
+                    localStorage.clear();
+                    window.location.href = `http://${window.location.host}`;
+                } else {
+                    message.warn(res.obj)
+                }
+            }
+        )
     }
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Popover, Button} from 'antd'
+import {Popover, Button, message} from 'antd'
 import ChangePassWord from './ChangePassWord'
-// import { getAction } from '@/axios'
+import { getAction } from '@/axios'
 
 class index extends Component {
     constructor(props){
@@ -13,8 +13,17 @@ class index extends Component {
     }
 
     logout = () => {
-        localStorage.clear();
-        window.location.href = `http://${window.location.host}`;
+        getAction("/user/logout").then(
+            (res) => {
+                if (res.success) {
+                    localStorage.clear();
+                    window.location.href = `http://${window.location.host}`;
+                } else {
+                    message.warn(res.obj)
+                }
+            }
+        )
+        
     }
 
     showModal = () => {
@@ -26,6 +35,13 @@ class index extends Component {
     hideModal = () => {
         this.setState({
             visible: false
+        })
+    }
+
+    componentDidMount () {
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        this.setState({
+            userName:userInfo.name
         })
     }
 

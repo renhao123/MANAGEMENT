@@ -1,5 +1,5 @@
 import React from 'react';
-// import { postAction } from '@/axios';
+import { postAction } from '@/axios';
 import { withRouter } from 'react-router-dom';
 import { message, Input, Button } from 'antd';
 import Bg from './bg.png'
@@ -25,12 +25,21 @@ class LoginPage extends React.Component{
             message.warning("密码不能为空");
             return false;
         }
-        if (username === "admin" && password === "!23qaz") {
-            window.localStorage.setItem("loginStatus","true");
-            window.location.reload();
-        } else {
-            message.error("账号/密码错误，请重新输入！！！")
-        }
+
+        postAction("/user/login",{
+            username,
+            password
+        }).then(
+            (res) => {
+                if(res.success){
+                    window.localStorage.setItem("loginStatus","true");
+                    window.localStorage.setItem("userInfo", JSON.stringify(res.obj))
+                    window.location.reload();
+                } else {
+                    message.error(res.obj)
+                }
+            }
+        )
     }
 
     nameChange = (e) => {

@@ -25,7 +25,7 @@ const contentTpyeArrs = [
 //基本设置
 let options = {
     baseURL: "",
-    timeout: 10000,
+    timeout: 200000,
     headers: {
         post: {
             'Content-Type': contentTpyeArrs[0]
@@ -73,7 +73,7 @@ ajax.interceptors.response.use((response) => {  // 接受请求后reqNumer--，�
     if (useResponse.success) {
         return { "success": true, "obj": useResponse["obj"] };
     } else {
-        if (useResponse.errorCode === 5) {//未登录过期，重定向
+        if (useResponse.errorCode === "403") {//未登录过期，重定向
             window.localStorage.clear();
             window.location.href = `http://${window.location.host}`;
             hideLoadingDom();

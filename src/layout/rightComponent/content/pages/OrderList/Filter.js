@@ -83,7 +83,7 @@ class Filter extends React.Component{
                 <Select value={this.state.orderState} style={{ width: "150px" }} onChange={this.orderStateChange}>
                     <Option value="0">全部</Option>
                     <Option value="1">未体检</Option>
-                    <Option value="2">已体检</Option>
+                    <Option value="4">已体检</Option>
                 </Select>
 
                 <Button type="primary" icon="search" style={{marginLeft: "20px"}} onClick={this.search}>搜索</Button>

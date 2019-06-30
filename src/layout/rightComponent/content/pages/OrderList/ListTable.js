@@ -1,5 +1,6 @@
 import React from 'react' 
-import {Table, Button, Modal,List} from 'antd'
+import {Table, Button, Modal,List, message} from 'antd'
+import{getAction, postAction} from '@/axios'
 
 class ListTable extends React.Component{
 
@@ -11,13 +12,11 @@ class ListTable extends React.Component{
             },
             {
               title: '性别',
-              dataIndex: 'sex',
-              render:(text) => (text === "1"?"男":"女")
+              dataIndex: 'sex'
             },
             {
               title: '婚姻',
-              dataIndex: 'marrige',
-              render:(text) => (text === "0"?"未婚":"已婚")
+              dataIndex: 'marrige'
             },
             {
               title: '手机',
@@ -65,38 +64,25 @@ class ListTable extends React.Component{
             orderState:"0"
         },
         data: [
-            {
-                key:1,
-                id:"", // 标识
-                name:"李安安",//姓名
-                sex:"1",//性别  男1女2全部3（移动端已定义，不可修改）
-                marrige:"0",// 婚姻  未婚0已婚1全部2 （移动端已定义，不可修改）
-                phone:"13971689350",// 手机
-                idCard:"429001198904257217",// 身份证
-                dateTime:"2019/6/21",// 预约时间
-                checkTime:"2019/6/21",//体检时间，如已经预约，尚未体检，此处返回""
-                orderState:"1",//当前订单状态 未体检1已体检2全部0
-                projects:["基本检查","肛肠检查","前列腺检查","肠胃检查","四肢检查","眼科","儿科"]
-            },
-            {
-                key:2,
-                id:"",
-                name:"君君",//姓名
-                sex:"2",//性别
-                marrige:"1",// 魂影
-                phone:"13971689350",// 手机
-                idCard:"429001198904257217",// 身份证
-                dateTime:"2019/6/21",// 预约时间
-                checkTime:"2019/6/21",//体检时间，如已经预约，尚未体检，此处返回""
-                orderState:"2",//当前订单状态
-                projects:["基本检查","肛肠检查","前列腺检查","肠胃检查","四肢检查","眼科","儿科"]
-            }
+            // {
+            //     key:1,
+            //     id:"", // 标识
+            //     name:"李安安",//姓名
+            //     sex:"1",//性别  男1女2全部3（移动端已定义，不可修改）
+            //     marrige:"0",// 婚姻  未婚0已婚1全部2 （移动端已定义，不可修改）
+            //     phone:"13971689350",// 手机
+            //     idCard:"429001198904257217",// 身份证
+            //     dateTime:"2019/6/21",// 预约时间
+            //     checkTime:"2019/6/21",//体检时间，如已经预约，尚未体检，此处返回""
+            //     orderState:"1",//当前订单状态 未体检1已体检2全部0
+            //     projects:["基本检查","肛肠检查","前列腺检查","肠胃检查","四肢检查","眼科","儿科"]
+            // }
         ],
         pagination: {
             current:1,
             pageSize:10,
             showQuickJumper:true,
-            total:200,
+            total:null,
             showTotal:(total) =>(`共${total}条数据`)
         },
         currentRecord:null,
@@ -108,12 +94,52 @@ class ListTable extends React.Component{
     }
 
     getData = (current=this.state.pagination.current, pageSize=this.state.pagination.pageSize) => {
-        let params = {
-            ...this.state.filters,
-            current,
-            pageSize
-        }
-        console.log('params:', params);
+        let customerSex = (this.state.filters.sex === "3") ? "" : this.state.filters.sex;
+        let customerMarried = (this.state.filters.marrige === "2") ? "" : this.state.filters.marrige;
+        let orderState = (this.state.filters.orderState === "0") ? "" : this.state.filters.orderState;
+        getAction("/order/query/list/v1",{
+            customerName:this.state.filters.name,
+            customerSex,
+            customerMarried,
+            appointmentTime:this.state.filters.dateTime,
+            checkTime:this.state.filters.checkTime,
+            orderState,
+            pageNum: current,
+            pageSize:pageSize
+        }).then(
+            (res) => {
+                if (res.success) {
+                    let data = [];
+                    res.obj.orderInfoResponse.forEach(
+                        (item, index) => {
+                            data.push({
+                                key:index + 1,
+                                id:item.orderId,
+                                name:item.customerName,
+                                sex:item.customerSex,
+                                marrige:item.customerMarried,
+                                phone:item.customerPhone,
+                                idCard:item.customerCard,
+                                dateTime:item.appointmentTime,
+                                checkTime:item.checkTime,
+                                orderState:item.orderState,
+                                projects:item.projects
+                            })
+                        }
+                    )
+                    this.setState({
+                        data,
+                        pagination: {
+                            ...this.state.pagination,
+                            current,
+                            total:res.obj.total
+                        }
+                    })
+                } else {
+                    message.warn(res.obj)
+                }
+            }
+        )
     };
 
     handleTableChange = (pagination) => {
@@ -143,9 +169,20 @@ class ListTable extends React.Component{
     }
 
     handleOk = () => {
-        this.setState({
-            visible:false
-        })
+        postAction("/order/check/create/v1",{
+            orderId: this.state.currentRecord.id
+        }).then(
+            (res) => {
+                if (res.success) {
+                    this.setState({
+                        visible:false
+                    })
+                    this.getData()
+                } else {
+                    message.warn(res.obj)
+                }
+            }
+        )
     }
 
     handleCancel = () => {
@@ -166,12 +203,11 @@ class ListTable extends React.Component{
                 />
 
                 <Modal
-                    title="确认提醒"
+                    title="项目明细"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <p>请确认当前预约者所有检查项目已全部检查完毕！！！</p>
                     {
                         this.state.currentRecord
                         ?
