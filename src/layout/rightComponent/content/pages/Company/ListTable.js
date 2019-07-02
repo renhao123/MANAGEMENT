@@ -1,5 +1,8 @@
 import React from 'react' 
-import {Table, Button, Modal,List, message} from 'antd'
+import ReactDOM from 'react-dom'
+import {Table, Button, message} from 'antd'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import FillTime from './FillTime'
 import{getAction, postAction} from '@/axios'
 
 const columns2 = [
@@ -40,28 +43,28 @@ class ListTable extends React.Component{
             {
                 title: '预约日期',
                 dataIndex: 'dateTime',
-                render:(text) => (
+                render:(text,record) => (
                 	text 
                 	?
                 	text 
                 	: 
                 	<span>
 	                	<span style={{color:"red"}}>未联系</span>
-	                	<span style={{color:"#1890ff",float:"right", cursor:"pointer"}} onClick={this.showModal.bind(this,"1")}>已联系?</span>
+	                	<span style={{color:"#1890ff",float:"right", cursor:"pointer"}} onClick={this.showModal.bind(this,"1", record)}>已联系?</span>
                 	</span>
                 )
             },
             {
                 title: '体检日期',
                 dataIndex: 'checkTime',
-                render:(text) => (
+                render:(text, record) => (
                 	text 
                 	? 
                 	text 
                 	: 
                 	<span>
 	                	<span style={{color:"red"}}>未体检</span>
-	                	<span style={{color:"#1890ff",float:"right", cursor:"pointer"}} onClick={this.showModal.bind(this,"2")}>已体检?</span>
+	                	<span style={{color:"#1890ff",float:"right", cursor:"pointer"}} onClick={this.showModal.bind(this,"2", record)}>已体检?</span>
                 	</span>
                 )
             }
@@ -83,7 +86,16 @@ class ListTable extends React.Component{
                    checkTime:""//体检时间，如已经预约，尚未体检，此处返回""
                }
         ],
-        data2: [],
+        data2: [
+        	{
+               key:1,
+               id:"", // 标识
+               name:"李安安",//姓名
+               company:"某某单位名称",
+               phone:"13971689350",// 手机
+               dateTime:"2019/06/09"// 预约时间
+            }
+        ],
         pagination: {
             current:1,
             pageSize:10,
@@ -93,10 +105,15 @@ class ListTable extends React.Component{
         },
         currentRecord:null,
         visible: false,
-        title:""
+        title:"",
     };
 
     componentDidMount(){
+    	if (this.refs['table']) {
+            const tableCon = ReactDOM.findDOMNode(this.refs['table'])
+            const table = tableCon.querySelector('table')
+            table.setAttribute('id', 'danwei')
+        }
         this.getData();
     }
     
@@ -110,19 +127,9 @@ class ListTable extends React.Component{
     
     hideModal = () =>{
     	this.setState({
+    		timeStr:"",
     		visible: false
     	})
-    }
-    
-    handleOk = () =>{
-    	//关闭弹窗
-    	this.hideModal();
-    	// 判断是修改预约时间还是修改体检时间，修改成功后在回调中重新加载table
-    	if (this.state.title === "1") { // 修改预约时间
-    		this.getData()
-    	} else { // 修改体检时间
-    		this.getData()
-    	}
     }
 
     getData = (current=this.state.pagination.current, pageSize=this.state.pagination.pageSize) => {
@@ -147,6 +154,7 @@ class ListTable extends React.Component{
 //      )
     };
 
+	// table 分页点击
     handleTableChange = (pagination) => {
         this.setState({
             pagination:{
@@ -157,6 +165,13 @@ class ListTable extends React.Component{
             this.getData()
         })
     };
+    
+    // 下载excel
+    getDownLoadData = () => {
+    	// 请求最新的已经预约的数据
+    	// 在回调中下载excel
+    	window.document.getElementById("downBtn").click();
+    }
 
     componentWillReceiveProps(nextProps){
         this.setState({
@@ -165,13 +180,15 @@ class ListTable extends React.Component{
             this.getData()
         })
     }
+    
+    
 
     render(){
-    	let title = (this.state.title === "1")? "请选择单位预约日期":"请选择单位体检日期";
         return (
             <div style={{background:"white",padding:"15px",border:"1px solid #e8e8e8"}}>
+            
                 <Table
-                	title={() => (<Button type="primary">导出预约列表</Button>)}
+                	title={() => (<Button type="primary" onClick={this.getDownLoadData}>导出预约列表</Button>)}
                     columns={this.state.columns}
                     dataSource={this.state.data}
                     pagination={this.state.pagination}
@@ -179,7 +196,18 @@ class ListTable extends React.Component{
                     bordered
                 />
                 
+                <span style={{display:"none"}}>
+	                <ReactHTMLTableToExcel
+	                    id="downBtn"
+	                    table="danwei"
+	                    filename="单位预约列表"
+	                    buttonText="导出单位预约列表"
+	                    sheet=""
+	                />
+                </span>
+                
                 <Table
+					ref='table'
                     columns={columns2}
                     dataSource={this.state.data2}
                     pagination={false}
@@ -187,14 +215,19 @@ class ListTable extends React.Component{
                     style={{display:"none"}}
                 />
                 
-                <Modal
-                    title={title}
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.hideModal}
-                >
-                    
-                </Modal>
+                {
+                	this.state.visible
+                	?
+                	<FillTime 
+                	record={this.state.currentRecord} 
+                	title={this.state.title} 
+                	visible={this.state.visible} 
+                	hideModal={this.hideModal} 
+                	getData={this.getData}
+                	/>
+                	:
+                	null
+                }
             </div>
         )
     }
