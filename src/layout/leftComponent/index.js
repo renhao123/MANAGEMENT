@@ -24,13 +24,20 @@ class index extends Component {
                 // }
                 {
                     id:"1",
-                    name:"订单列表",
+                    name:"个人订单",
                     url:"/main/orderlist",
                     iconUrl:"icon-detail",
                     subMenus:[]
                 },
                 {
                     id:"2",
+                    name:"单位订单",
+                    url:"/main/company",
+                    iconUrl:"icon-danwei",
+                    subMenus:[]
+                },
+                {
+                    id:"3",
                     name:"账户管理",
                     url:"/main/account",
                     iconUrl:"icon-addteam",
