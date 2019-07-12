@@ -97,7 +97,7 @@ class ListTable extends React.Component{
         let customerSex = (this.state.filters.sex === "3") ? "" : this.state.filters.sex;
         let customerMarried = (this.state.filters.marrige === "2") ? "" : this.state.filters.marrige;
         let orderState = (this.state.filters.orderState === "0") ? "" : this.state.filters.orderState;
-        getAction("/order/query/list/v1",{
+        getAction("/manage/order/query/list/v1",{
             customerName:this.state.filters.name,
             customerSex,
             customerMarried,
@@ -169,7 +169,7 @@ class ListTable extends React.Component{
     }
 
     handleOk = () => {
-        postAction("/order/check/create/v1",{
+        postAction("/manage/order/check/create/v1",{
             orderId: this.state.currentRecord.id
         }).then(
             (res) => {

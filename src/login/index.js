@@ -26,7 +26,7 @@ class LoginPage extends React.Component{
             return false;
         }
 
-        postAction("/user/login",{
+        postAction("/manage/user/login",{
             username,
             password
         }).then(

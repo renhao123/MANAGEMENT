@@ -13,7 +13,7 @@ class index extends Component {
     }
 
     logout = () => {
-        getAction("/user/logout").then(
+        getAction("/manage/user/logout").then(
             (res) => {
                 if (res.success) {
                     localStorage.clear();

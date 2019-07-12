@@ -6,10 +6,10 @@ class Company extends React.Component{
 	
 	state={
         filters: {
-            name:"",
-	        company:"",
-	        dateTime:"",
-	        checkTime:""
+            contacts:"", // 联系人
+            company:"", // 单位名称
+            contactPhone:"", // 联系电话
+            createDate:"" // 创建日期
         }
     }
 

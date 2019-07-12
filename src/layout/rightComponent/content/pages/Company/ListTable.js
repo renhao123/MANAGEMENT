@@ -2,27 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Table, Button, message} from 'antd'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import FillTime from './FillTime'
-import{getAction, postAction} from '@/axios'
-
-const columns2 = [
-    {
-      title: '联系人',
-      dataIndex: 'name',
-    },
-    {
-      title: '单位',
-      dataIndex: 'company'
-    },
-    {
-      title: '手机',
-      dataIndex: 'phone',
-    },
-    {
-        title: '预约日期',
-        dataIndex: 'dateTime'
-    }
-]
+import{getAction} from '@/axios'
 
 class ListTable extends React.Component{
 
@@ -30,82 +10,44 @@ class ListTable extends React.Component{
         columns: [
             {
               title: '联系人',
-              dataIndex: 'name',
+              dataIndex: 'contacts',
             },
+			{
+			  title: '手机',
+			  dataIndex: 'contactPhone',
+			},
             {
               title: '单位',
               dataIndex: 'company'
             },
             {
-              title: '手机',
-              dataIndex: 'phone',
-            },
-            {
-                title: '预约日期',
-                dataIndex: 'dateTime',
-                render:(text,record) => (
-                	text 
-                	?
-                	text 
-                	: 
-                	<span>
-	                	<span style={{color:"red"}}>未联系</span>
-	                	<span style={{color:"#1890ff",float:"right", cursor:"pointer"}} onClick={this.showModal.bind(this,"1", record)}>已联系?</span>
-                	</span>
-                )
-            },
-            {
-                title: '体检日期',
-                dataIndex: 'checkTime',
-                render:(text, record) => (
-                	text 
-                	? 
-                	text 
-                	: 
-                	<span>
-	                	<span style={{color:"red"}}>未体检</span>
-	                	<span style={{color:"#1890ff",float:"right", cursor:"pointer"}} onClick={this.showModal.bind(this,"2", record)}>已体检?</span>
-                	</span>
-                )
+                title: '创建日期',
+                dataIndex: 'createDate'
             }
         ],
-        filters: {
-            name:"",
-	        company:"",
-	        dateTime:"",
-	        checkTime:""
-        },
+		filters: {
+		    contacts:"", // 联系人
+			contactPhone:"", // 联系电话
+		    company:"", // 单位名称
+		    createDate:"" // 创建日期
+		},
         data: [
-               {
-                   key:1,
-                   id:"", // 标识
-                   name:"李安安",//姓名
-                   company:"某某单位名称",
-                   phone:"13971689350",// 手机
-                   dateTime:"",// 预约时间
-                   checkTime:""//体检时间，如已经预约，尚未体检，此处返回""
-               }
-        ],
-        data2: [
-        	{
-               key:1,
-               id:"", // 标识
-               name:"李安安",//姓名
-               company:"某某单位名称",
-               phone:"13971689350",// 手机
-               dateTime:"2019/06/09"// 预约时间
-            }
+       //         {
+       //             key:1,
+       //             groupBuyingId:"", // 标识
+       //             contacts:"李安安",//联系人
+				   // contactPhone:"13971689350",// 联系电话
+       //             company:"某某单位名称",// 单位名称
+       //             createDate:""// 创建日期
+       //         }
         ],
         pagination: {
             current:1,
-            pageSize:10,
+            pageSize:20,
             showQuickJumper:true,
             total:null,
             showTotal:(total) =>(`共${total}条数据`)
         },
-        currentRecord:null,
-        visible: false,
-        title:"",
     };
 
     componentDidMount(){
@@ -116,42 +58,26 @@ class ListTable extends React.Component{
         }
         this.getData();
     }
-    
-    showModal = (str, record) => {
-    	this.setState({
-    		title:str,
-    		visible:true,
-    		currentRecord:record
-    	})
-    }
-    
-    hideModal = () =>{
-    	this.setState({
-    		timeStr:"",
-    		visible: false
-    	})
-    }
 
     getData = (current=this.state.pagination.current, pageSize=this.state.pagination.pageSize) => {
-//      getAction("/order/query/list/v1",{
-//          
-//      }).then(
-//          (res) => {
-//          	let data = [];
-//          	this.setState({
-//              if (res.success) {
-//                      data,
-//                      pagination: {
-//                          ...this.state.pagination,
-//                          current,
-//                          total:res.obj.total
-//                      }
-//                  })
-//              } else {
-//                  message.warn(res.obj)
-//              }
-//          }
-//      )
+		let {company,contacts,contactPhone,createDate} = this.state.filters;
+		getAction("/manage/project/groupBuying/query/v1",{
+			company,contacts,contactPhone,createDate,pageSize,
+			pageNum:current
+		 }).then(
+			 (res) => {
+				if (res.success) {
+					res.obj.forEach(
+						(item, index) => {item.key = index + 1}
+					)
+					this.setState({
+						data:res.obj
+					})
+				} else {
+				 message.warn(res.obj)
+				}
+			 }
+		 )
     };
 
 	// table 分页点击
@@ -180,14 +106,13 @@ class ListTable extends React.Component{
             this.getData()
         })
     }
-    
-    
 
     render(){
         return (
             <div style={{background:"white",padding:"15px",border:"1px solid #e8e8e8"}}>
             
                 <Table
+					ref='table'
                 	title={() => (<Button type="primary" onClick={this.getDownLoadData}>导出预约列表</Button>)}
                     columns={this.state.columns}
                     dataSource={this.state.data}
@@ -205,29 +130,6 @@ class ListTable extends React.Component{
 	                    sheet=""
 	                />
                 </span>
-                
-                <Table
-					ref='table'
-                    columns={columns2}
-                    dataSource={this.state.data2}
-                    pagination={false}
-                    bordered
-                    style={{display:"none"}}
-                />
-                
-                {
-                	this.state.visible
-                	?
-                	<FillTime 
-                	record={this.state.currentRecord} 
-                	title={this.state.title} 
-                	visible={this.state.visible} 
-                	hideModal={this.hideModal} 
-                	getData={this.getData}
-                	/>
-                	:
-                	null
-                }
             </div>
         )
     }

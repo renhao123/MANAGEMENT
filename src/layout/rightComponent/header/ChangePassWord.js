@@ -46,7 +46,7 @@ class ChangePassWord extends React.Component{
         }
 
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        postAction("/system/user/update/password",{
+        postAction("/manage/system/user/update/password",{
             userId:userInfo.id,
             originalPassword:this.state.old,
             currentPassword:this.state.new
