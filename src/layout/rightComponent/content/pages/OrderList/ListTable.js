@@ -37,7 +37,15 @@ class ListTable extends React.Component{
             {
                 title: '体检状态',
                 dataIndex: 'orderState',
-                render:(text) => (text === "1"?"未体检":"已体检")
+				render: (text) => {
+					if (text === "1") {
+						return (<span>未体检</span>)
+					} else if (text === "3") {
+						return (<span>已取消</span>)
+					} else if (text === "4") {
+						return (<span>已体检</span>)
+					}
+				}
             },
             {
                 title: '操作',
@@ -45,12 +53,10 @@ class ListTable extends React.Component{
                 render:(text,record) => {
                     if (record.orderState === "1") {
                         return (
-                            <Button type="primary" onClick={this.checkOver.bind(this, record)}>完成</Button>
+                            <Button type="primary" onClick={this.checkOver.bind(this, record)}>体检完成</Button>
                         )
                     } else {
-                        return(
-                            <Button type="primary" disabled>已完成</Button>
-                        )
+                        return(<span>-</span>)
                     }
                 }
             }

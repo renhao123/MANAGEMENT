@@ -113,7 +113,7 @@ class ListTable extends React.Component{
             
                 <Table
 					ref='table'
-                	title={() => (<Button type="primary" onClick={this.getDownLoadData}>导出预约列表</Button>)}
+                	title={() => (<Button type="primary" onClick={this.getDownLoadData}>导出当前页面预约列表</Button>)}
                     columns={this.state.columns}
                     dataSource={this.state.data}
                     pagination={this.state.pagination}

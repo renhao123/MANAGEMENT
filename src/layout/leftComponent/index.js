@@ -36,13 +36,13 @@ class index extends Component {
                     iconUrl:"icon-danwei",
                     subMenus:[]
                 },
-                {
-                    id:"3",
-                    name:"账户管理",
-                    url:"/main/account",
-                    iconUrl:"icon-addteam",
-                    subMenus:[]
-                }
+                // {
+                //     id:"3",
+                //     name:"账户管理",
+                //     url:"/main/account",
+                //     iconUrl:"icon-addteam",
+                //     subMenus:[]
+                // }
             ]
         }
     }

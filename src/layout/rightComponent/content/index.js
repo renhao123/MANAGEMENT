@@ -45,7 +45,7 @@ let asyncComponent = (loadComponent, placeholder = null) => {
 // 个人订单
 const OrderList = asyncComponent(() => import('./pages/OrderList'));
 // 账户管理
-const Account = asyncComponent(() => import('./pages/Account'));
+// const Account = asyncComponent(() => import('./pages/Account'));
 // 单位订单
 const Company = asyncComponent(() => import('./pages/Company'));
 
@@ -56,7 +56,7 @@ class index extends Component {
             <Content style={{margin: "4px 0 0 0",overflow: "auto",flex:"1",padding: "0px", background: "#f3f3f3"}}>
                 <Switch>
                     <Route exact path="/main/orderlist" component={OrderList} />
-                    <Route exact path="/main/account" component={Account} />
+                    {/*<Route exact path="/main/account" component={Account} />*/}
                     <Route exact path="/main/company" component={Company} />
                     <Route path="*" render={(props) => <Redirect to={"/main/orderlist"}/>} />
                 </Switch>
