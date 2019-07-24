@@ -42,7 +42,7 @@ class Filter extends React.Component{
             <div style={{marginBottom:"20px", background:"white", padding:"15px 10px", border:"1px solid #e8e8e8"}}>
 
                 <span style={{textAlign:"center", lineHeight:"32px", margin:"0px 10px"}}>联系人：</span>
-                <Input value={this.state.contacts} placeholder="请输入联系人姓名" style={{width:"150px"}} onChange={this.contactsChange} />,
+                <Input value={this.state.contacts} placeholder="请输入联系人姓名" style={{width:"150px"}} onChange={this.contactsChange} />
 				
 				<span style={{textAlign:"center", lineHeight:"32px", margin:"0px 10px"}}>联系电话：</span>
 				<Input value={this.state.contactPhone} placeholder="请输入联系人姓名" style={{width:"150px"}} onChange={this.contactPhoneChange} />

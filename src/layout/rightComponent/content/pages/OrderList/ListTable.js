@@ -1,5 +1,7 @@
 import React from 'react' 
+import ReactDOM from 'react-dom'
 import {Table, Button, Modal,List, message} from 'antd'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import{getAction, postAction} from '@/axios'
 
 class ListTable extends React.Component{
@@ -25,6 +27,7 @@ class ListTable extends React.Component{
             {
                 title: '身份证号码',
                 dataIndex: 'idCard',
+				className: "id-card-td"
             },
             {
                 title: '预约日期',
@@ -96,8 +99,23 @@ class ListTable extends React.Component{
     };
 
     componentDidMount(){
+		if (this.refs['table']) {
+		    const tableCon = ReactDOM.findDOMNode(this.refs['table'])
+		    const table = tableCon.querySelector('table')
+		    table.setAttribute('id', 'geren')
+		}
         this.getData();
     }
+	
+	// 下载excel
+	getDownLoadData = () => {
+		// let idCardTds = window.document.getElementsByClassName("id-card-td");
+		// let i;
+		// for (i = 0; i < idCardTds.length; i++) {
+		// 	idCardTds[i].setAttribute("style","mso-number-format:'/\@'")
+		// }
+		window.document.getElementById("downLoadBtn").click();
+	}
 
     getData = (current=this.state.pagination.current, pageSize=this.state.pagination.pageSize) => {
         let customerSex = (this.state.filters.sex === "3") ? "" : this.state.filters.sex;
@@ -199,8 +217,10 @@ class ListTable extends React.Component{
 
     render(){
         return (
-            <div style={{background:"white",padding:"15px",border:"1px solid #e8e8e8"}}>
+            <div className="personalList" style={{background:"white",padding:"15px",border:"1px solid #e8e8e8"}}>
                 <Table
+					ref='table'
+					title={() => (<Button type="primary" onClick={this.getDownLoadData}>导出当前页面预约列表</Button>)}
                     columns={this.state.columns}
                     dataSource={this.state.data}
                     pagination={this.state.pagination}
@@ -227,6 +247,16 @@ class ListTable extends React.Component{
                         null
                     }
                 </Modal>
+				
+				<span style={{display:"none"}}>
+				    <ReactHTMLTableToExcel
+				        id="downLoadBtn"
+				        table="geren"
+				        filename="个人预约列表"
+				        buttonText="导出当前个人预约列表"
+				        sheet=""
+				    />
+				</span>
             </div>
         )
     }
