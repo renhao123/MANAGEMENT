@@ -1,0 +1,45 @@
+.headerStyle{
+	background: #fff;
+	padding: 0;
+	flex: 0 0 80px;
+	box-shadow: 0 2px 4px 0 rgba(35, 36, 37, 0.3);
+}
+
+.headerStyle .content{
+	float:right;
+	line-height: 80px;
+	padding: 0px 30px;
+	font-size: 16px;
+}
+
+.headerStyle .content i{
+	font-size:18px; 
+	margin-left: 20px; 
+	cursor: pointer;
+}
+
+.headerStyle .content span:last-child{
+	cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+    .headerStyle{
+    	background: #fff;
+    	padding: 0;
+    	flex: 0 0 40px;
+    	box-shadow: 0 2px 4px 0 rgba(35, 36, 37, 0.3);
+    }
+    
+    .headerStyle .content{
+    	float:right;
+    	line-height: 40px;
+    	padding: 0px 30px;
+    	font-size: 14px;
+    }
+    
+    .headerStyle .content i{
+    	font-size:14px; 
+    	margin-left: 20px; 
+    	cursor: pointer;
+    }
+}

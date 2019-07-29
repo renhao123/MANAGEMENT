@@ -11,35 +11,43 @@ class ListTable extends React.Component{
             {
               title: '姓名',
               dataIndex: 'name',
+			  fixed: 'left',
+			  width:100
             },
             {
               title: '性别',
-              dataIndex: 'sex'
+              dataIndex: 'sex',
+			  width:100
             },
             {
               title: '婚姻',
-              dataIndex: 'marrige'
+              dataIndex: 'marrige',
+			  width:100
             },
             {
               title: '手机',
               dataIndex: 'phone',
+			  width:150
             },
             {
                 title: '身份证号码',
                 dataIndex: 'idCard',
-				className: "id-card-td"
+				className: "id-card-td",
             },
             {
                 title: '预约日期',
                 dataIndex: 'dateTime',
+				width:150
             },
             {
                 title: '体检日期',
                 dataIndex: 'checkTime',
+				width:150
             },
             {
                 title: '体检状态',
                 dataIndex: 'orderState',
+				width:150,
 				render: (text) => {
 					if (text === "1") {
 						return (<span>未体检</span>)
@@ -52,6 +60,8 @@ class ListTable extends React.Component{
             },
             {
                 title: '操作',
+				fixed: 'right',
+				width: 150,
                 dataIndex: 'handle',
                 render:(text,record) => {
                     if (record.orderState === "1") {
@@ -61,7 +71,7 @@ class ListTable extends React.Component{
                     } else {
                         return(<span>-</span>)
                     }
-                }
+                },
             }
         ],
         filters: {
@@ -104,7 +114,7 @@ class ListTable extends React.Component{
 		    const table = tableCon.querySelector('table')
 		    table.setAttribute('id', 'geren')
 		}
-        this.getData();
+        // this.getData();
     }
 	
 	// 下载excel
@@ -114,7 +124,11 @@ class ListTable extends React.Component{
 		// for (i = 0; i < idCardTds.length; i++) {
 		// 	idCardTds[i].setAttribute("style","mso-number-format:'/\@'")
 		// }
-		window.document.getElementById("downLoadBtn").click();
+		if (window.document.body.clientWidth > 900) {
+			window.document.getElementById("downLoadBtn").click();
+		} else{
+			message.warn("请在电脑上下载当前页面预约列表", 5)
+		}
 	}
 
     getData = (current=this.state.pagination.current, pageSize=this.state.pagination.pageSize) => {
@@ -216,16 +230,21 @@ class ListTable extends React.Component{
     }
 
     render(){
+		let perce = (window.document.body.clientWidth > 900) ? {x:"100%"}:{x:"200%"}
+		
         return (
             <div className="personalList" style={{background:"white",padding:"15px",border:"1px solid #e8e8e8"}}>
                 <Table
 					ref='table'
-					title={() => (<Button type="primary" onClick={this.getDownLoadData}>导出当前页面预约列表</Button>)}
+					title={
+						() => (<Button type="primary" onClick={this.getDownLoadData}>导出当前页面预约列表</Button>)
+					}
                     columns={this.state.columns}
                     dataSource={this.state.data}
                     pagination={this.state.pagination}
                     onChange={this.handleTableChange}
                     bordered
+					scroll={perce}
                 />
 
                 <Modal

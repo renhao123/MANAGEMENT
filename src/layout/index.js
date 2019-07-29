@@ -5,13 +5,19 @@ import RightComponent from './rightComponent';
 
 const { Sider } = Layout;
 
-const siderStyle = {
+const siderStyle1 = {
     flex: "0 0 230px !important",
     maxWidth: "230px !important",
     minWidth: "230px !important",
     width: "230px !important",
     height: "100vh"
 }
+
+const siderStyle2 = {
+	display:"none"
+}
+
+let siderStyle = (window.document.body.clientWidth < 1000) ? siderStyle2 : siderStyle1;
 
 class Main extends React.Component{
     constructor(props){

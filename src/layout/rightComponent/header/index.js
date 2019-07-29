@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Popover, Button, message} from 'antd'
 import ChangePassWord from './ChangePassWord'
 import { getAction } from '@/axios'
+import './index.css'
 
 class index extends Component {
     constructor(props){
@@ -47,9 +48,9 @@ class index extends Component {
 
     render() {
         return (
-            <header style={{background: "#fff",padding: "0",flex: "0 0 80px",boxShadow: "0 2px 4px 0 rgba(35, 36, 37, 0.3)"}}>
-                <div style={{float:"right",lineHeight: "80px",padding: "0px 30px",fontsize: "16px"}}>
-                    <i className="iconfont icon-user" style={{fontSize:"20px", fontWeight: "bold"}}></i>
+            <header className="headerStyle">
+                <div className="content">
+                    <i className="iconfont icon-user"></i>
                     <span>{this.state.userName}</span>
                     <Popover
                         placement="bottomRight"
@@ -62,8 +63,8 @@ class index extends Component {
                             )
                         }
                     >
-                        <i className="iconfont icon-set" style={{fontSize:"18px", fontWeight: "bold", marginLeft: "20px", cursor: "pointer"}}></i>
-                        <span style={{cursor: "pointer"}}>设置</span>
+                        <i className="iconfont icon-set"></i>
+                        <span>设置</span>
                     </Popover>
                 </div>
 
