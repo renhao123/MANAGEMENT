@@ -53,6 +53,7 @@ class index extends Component {
                     <i className="iconfont icon-user"></i>
                     <span>{this.state.userName}</span>
                     <Popover
+                        trigger="click"
                         placement="bottomRight"
                         content={
                             (
