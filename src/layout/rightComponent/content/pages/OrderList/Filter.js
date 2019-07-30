@@ -55,7 +55,7 @@ class Filter extends React.Component{
     render(){
         return (
 			<div>
-				{(window.document.body.clientWidth > 900 )? null : (<p style={{color: "red"}}>请在横屏模式下查看此页面!!!</p>)}
+				{(window.document.body.clientWidth > 900 )? null : (<p><span style={{color: "red"}}>请在横屏模式下查看此页面!!!</span><br /><span>点击此处查看单位预约列表>>></span></p>)}
 			
 				<div style={{marginBottom:"20px", background:"white", overflow:"hidden", padding:"15px 10px", border:"1px solid #e8e8e8"}}>
 					
@@ -100,8 +100,10 @@ class Filter extends React.Component{
 							<Option value="4">已体检</Option>
 						</Select>
 					</p>
-
-					<Button type="primary" icon="search" style={{marginLeft: "20px",marginTop:"2rem"}} onClick={this.search}>搜索</Button>
+					
+					<p style={{width:"100px",margin:"0px 10px",textAlign:"center", lineHeight:"32px", float:"left"}}>
+						<Button type="primary" icon="search" style={{marginTop:"2rem", float:"left"}} onClick={this.search}>搜索</Button>
+					</p>
 				</div>
 			</div>
         )

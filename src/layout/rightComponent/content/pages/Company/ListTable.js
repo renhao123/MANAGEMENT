@@ -11,10 +11,12 @@ class ListTable extends React.Component{
             {
               title: '联系人',
               dataIndex: 'contacts',
+			  width: 100
             },
 			{
 			  title: '手机',
 			  dataIndex: 'contactPhone',
+			  width: 150
 			},
             {
               title: '单位',
@@ -22,7 +24,8 @@ class ListTable extends React.Component{
             },
             {
                 title: '创建日期',
-                dataIndex: 'createDate'
+                dataIndex: 'createDate',
+				width:200
             }
         ],
 		filters: {
@@ -96,7 +99,12 @@ class ListTable extends React.Component{
     getDownLoadData = () => {
     	// 请求最新的已经预约的数据
     	// 在回调中下载excel
-    	window.document.getElementById("downBtn").click();
+    	
+		if (window.document.body.clientWidth > 900) {
+			window.document.getElementById("downBtn").click();
+		} else{
+			message.warn("请在电脑上下载当前页面预约列表", 5)
+		}
     }
 
     componentWillReceiveProps(nextProps){

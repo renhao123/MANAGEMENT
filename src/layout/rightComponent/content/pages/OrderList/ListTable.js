@@ -114,7 +114,7 @@ class ListTable extends React.Component{
 		    const table = tableCon.querySelector('table')
 		    table.setAttribute('id', 'geren')
 		}
-        // this.getData();
+        this.getData();
     }
 	
 	// 下载excel
