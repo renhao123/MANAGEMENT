@@ -23,6 +23,14 @@ class ListTable extends React.Component{
               dataIndex: 'company'
             },
             {
+                title: '预计人数',
+                dataIndex: 'amount'
+            },
+            {
+                title: '人均预算',
+                 dataIndex: 'budget'
+            },
+            {
                 title: '创建日期',
                 dataIndex: 'createDate',
 				width:200

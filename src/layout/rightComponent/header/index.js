@@ -41,9 +41,14 @@ class index extends Component {
 
     componentDidMount () {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        this.setState({
-            userName:userInfo.name
-        })
+        if (!userInfo) {
+            localStorage.clear();
+            window.location.reload();
+        } else {
+            this.setState({
+                userName:userInfo.name
+            })
+        }
     }
 
     render() {
