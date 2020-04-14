@@ -17,37 +17,85 @@ class ListTable extends React.Component{
             {
               title: '性别',
               dataIndex: 'sex',
-			  width:100
+			  width:80
             },
             {
               title: '婚姻',
               dataIndex: 'marrige',
-			  width:100
+			  width:80
             },
             {
               title: '手机',
               dataIndex: 'phone',
-			  width:150
+			  width:120,
+			  render:(text) => {
+			  	return (
+			  		<span title={text}>{text}</span>
+			  	)
+			  }
             },
             {
                 title: '身份证号码',
                 dataIndex: 'idCard',
-				className: "id-card-td",
+				// className: "id-card-td",
+				render:(text) => {
+					return (
+						<span title={text}>{text}</span>
+					)
+				}
             },
+			{
+				title:"订单号",
+				dataIndex:'outTradeNo',
+				render:(text) => {
+					return (
+						<span title={text}>{text}</span>
+					)
+				}
+			},
+			{
+				title:"套餐名称",
+				dataIndex:'combineName',
+				render:(text) => {
+					return (
+						<span title={text}>{text}</span>
+					)
+				}
+			},
+			{
+				title:"订单金额",
+				dataIndex:'price',
+				width:100,
+				render:(text) => {
+					return (
+						<span title={text}>{text}</span>
+					)
+				}
+			},
             {
                 title: '预约日期',
                 dataIndex: 'dateTime',
-				width:150
+				width:120,
+				render:(text) => {
+					return (
+						<span title={text}>{text}</span>
+					)
+				}
             },
             {
                 title: '体检日期',
                 dataIndex: 'checkTime',
-				width:150
+				width:120,
+				render:(text) => {
+					return (
+						<span title={text}>{text}</span>
+					)
+				}
             },
             {
                 title: '体检状态',
                 dataIndex: 'orderState',
-				width:150,
+				width:90,
 				render: (text) => {
 					if (text === "1") {
 						return (<span>未体检</span>)
@@ -61,7 +109,7 @@ class ListTable extends React.Component{
             {
                 title: '操作',
 				fixed: 'right',
-				width: 150,
+				width: 120,
                 dataIndex: 'handle',
                 render:(text,record) => {
                     if (record.orderState === "1") {
@@ -119,6 +167,7 @@ class ListTable extends React.Component{
 	
 	// 下载excel
 	getDownLoadData = () => {
+		// 表格下载之后， 身份证号码无法正常呈现， 通过以下方法预处理
 		// let idCardTds = window.document.getElementsByClassName("id-card-td");
 		// let i;
 		// for (i = 0; i < idCardTds.length; i++) {
@@ -148,6 +197,7 @@ class ListTable extends React.Component{
             (res) => {
                 if (res.success) {
                     let data = [];
+					console.log(res.obj)
                     res.obj.orderInfoResponse.forEach(
                         (item, index) => {
                             data.push({
@@ -158,6 +208,9 @@ class ListTable extends React.Component{
                                 marrige:item.customerMarried,
                                 phone:item.customerPhone,
                                 idCard:item.customerCard,
+								outTradeNo:item.outTradeNo,
+								combineName:item.combineName,
+								price:item.price,
                                 dateTime:item.appointmentTime,
                                 checkTime:item.checkTime,
                                 orderState:item.orderState,
