@@ -11,12 +11,19 @@ class Filter extends React.Component{
         marrige:"2",
         dateTime:"",
         checkTime:"",
-        orderState:"0"
+        orderState:"0",
+		orderName:""
     }
 
     nameChange = (e) => {
         this.setState({
             name:e.target.value
+        })
+    }
+	
+	orderNameChange = (e) => {
+        this.setState({
+            orderName:e.target.value
         })
     }
 
@@ -117,6 +124,11 @@ class Filter extends React.Component{
 							<Option value="1">未体检</Option>
 							<Option value="4">已体检</Option>
 						</Select>
+					</div>
+					
+					<div style={{width:"150px",margin:"0px 10px",textAlign:"center", lineHeight:"32px", float:"left"}}>
+						<span style={{float:"left"}}>订单编号：</span>
+						<Input value={this.state.orderName} placeholder="请输入订单编号" style={{width:"100%"}} onChange={this.orderNameChange} />
 					</div>
 					
 					<div style={{width:"100px",margin:"0px 10px",textAlign:"center", lineHeight:"32px", float:"left"}}>

@@ -37,6 +37,7 @@ class ListTable extends React.Component{
             {
                 title: '身份证号码',
                 dataIndex: 'idCard',
+				width:200,
 				// className: "id-card-td",
 				render:(text) => {
 					return (
@@ -47,6 +48,7 @@ class ListTable extends React.Component{
 			{
 				title:"订单号",
 				dataIndex:'outTradeNo',
+				width:200,
 				render:(text) => {
 					return (
 						<span title={text}>{text}</span>
@@ -54,8 +56,17 @@ class ListTable extends React.Component{
 				}
 			},
 			{
+				title:"发票抬头",
+				dataIndex:'taitou',
+				width:200,
+				render:(text) => {
+					return text ? (<span title={text}>{text}</span>) : (<span>-</span>)
+				}
+			},
+			{
 				title:"套餐名称",
 				dataIndex:'combineName',
+				width:200,
 				render:(text) => {
 					return (
 						<span title={text}>{text}</span>
@@ -87,14 +98,13 @@ class ListTable extends React.Component{
                 dataIndex: 'checkTime',
 				width:120,
 				render:(text) => {
-					return (
-						<span title={text}>{text}</span>
-					)
+					return text ? (<span title={text}>{text}</span>) : (<span>-</span>)
 				}
             },
             {
                 title: '体检状态',
                 dataIndex: 'orderState',
+				fixed: 'right',
 				width:90,
 				render: (text) => {
 					if (text === "1") {
@@ -128,7 +138,8 @@ class ListTable extends React.Component{
             marrige:"2",
             dateTime:"",
             checkTime:"",
-            orderState:"0"
+            orderState:"0",
+			orderName:""
         },
         data: [
             // {
@@ -139,6 +150,7 @@ class ListTable extends React.Component{
             //     marrige:"0",// 婚姻  未婚0已婚1全部2 （移动端已定义，不可修改）
             //     phone:"13971689350",// 手机
             //     idCard:"429001198904257217",// 身份证
+			//	   taitou:"", // 发票抬头
             //     dateTime:"2019/6/21",// 预约时间
             //     checkTime:"2019/6/21",//体检时间，如已经预约，尚未体检，此处返回""
             //     orderState:"1",//当前订单状态 未体检1已体检4全部0
@@ -192,7 +204,8 @@ class ListTable extends React.Component{
             checkTime:this.state.filters.checkTime,
             orderState,
             pageNum: current,
-            pageSize:pageSize
+            pageSize:pageSize,
+			outTradeNo:this.state.filters.orderName
         }).then(
             (res) => {
                 if (res.success) {
@@ -209,6 +222,7 @@ class ListTable extends React.Component{
                                 phone:item.customerPhone,
                                 idCard:item.customerCard,
 								outTradeNo:item.outTradeNo,
+								taitou:item.taitou,
 								combineName:item.combineName,
 								price:item.price,
                                 dateTime:item.appointmentTime,

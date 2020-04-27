@@ -11,7 +11,8 @@ class OrderList extends React.Component {
             marrige:"2",
             dateTime:"",
             checkTime:"",
-            orderState:"0"
+            orderState:"0",
+			orderName:""
         }
     }
 
